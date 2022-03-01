@@ -1,40 +1,25 @@
 import { expect } from 'chai';
-import { Item, GildedRose } from "../app/gilded-rose";
+import { GildedRose } from "../app/gilded-rose";
+import { BackstagePassesItem } from '../app/models/backstage-passes-item.model';
+import { BaseItem } from '../app/models/base-item.model';
+import { CommonItem } from '../app/models/common-item.model';
+import { ConjuredItem } from '../app/models/conjured-item.model';
+import { LegendaryItem } from '../app/models/legendary-item.model';
+import { OlderBetterItem } from '../app/models/older-better-item.model';
 
-const testItems: Array<Item> = [
-    {
-        name: 'Sulfuras, Hand of Ragnaros',
-        sellIn: 999,
-        quality: 80
-    },
-    {
-        name: 'Aged Brie',
-        sellIn: 15,
-        quality: 1
-    },
-    {
-        name: 'Backstage passes to a TAFKAL80ETC concert',
-        sellIn: 0,
-        quality: 50
-    },
-    {
-        name: 'Other item',
-        sellIn: 0,
-        quality: 10
-    },
-    {
-        name: 'Conjured',
-        sellIn: 10,
-        quality: 50
-    },
-    {
-        name: 'Another item',
-        sellIn: 0,
-        quality: 0
-    },
-];
+const getTestItems = (): Array<BaseItem> => {
+    const items: Array<BaseItem> = [
+        new LegendaryItem('Sulfuras, Hand of Ragnaros', 999, 80, false),
+        new OlderBetterItem('Aged Brie', 15, 1, true),
+        new BackstagePassesItem('Backstage passes to a TAFKAL80ETC concert', 0 , 50, true),
+        new CommonItem('Roasted Chicken', 0, 10, true),
+        new ConjuredItem('Conjured Water', 10, 50, true),
+        new CommonItem('Another Common Item', 0, 0, true)
+    ];
+    return items;
+}
 
-const gildedRose = new GildedRose(testItems);
+const gildedRose = new GildedRose(getTestItems());
 const result = gildedRose.updateQuality();
 
 describe('updateQuality()', function () {
@@ -57,18 +42,18 @@ describe('updateQuality()', function () {
         expect(result.find(item => item.name === 'Backstage passes to a TAFKAL80ETC concert')).to.have.property('sellIn').eql(-1)
     });
 
-    it('Other item should have quality of 8 and SellIn of -1', function() {
-        expect(result.find(item => item.name === 'Other item')).to.have.property('quality').eql(8)
-        expect(result.find(item => item.name === 'Other item')).to.have.property('sellIn').eql(-1)
+    it('Roasted Chicken should have quality of 8 and SellIn of -1', function() {
+        expect(result.find(item => item.name === 'Roasted Chicken')).to.have.property('quality').eql(8)
+        expect(result.find(item => item.name === 'Roasted Chicken')).to.have.property('sellIn').eql(-1)
     });
 
-    it('Conjured should have quality of 48 and SellIn of 9', function() {
-        expect(result.find(item => item.name === 'Conjured')).to.have.property('quality').eql(48)
-        expect(result.find(item => item.name === 'Conjured')).to.have.property('sellIn').eql(9)
+    it('Conjured Water should have quality of 48 and SellIn of 9', function() {
+        expect(result.find(item => item.name === 'Conjured Water')).to.have.property('quality').eql(48)
+        expect(result.find(item => item.name === 'Conjured Water')).to.have.property('sellIn').eql(9)
     });
 
-    it('Another item should have quality of 0 and SellIn of -1', function() {
-        expect(result.find(item => item.name === 'Another item')).to.have.property('quality').eql(0)
-        expect(result.find(item => item.name === 'Another item')).to.have.property('sellIn').eql(-1)
+    it('Another Common Item should have quality of 0 and SellIn of -1', function() {
+        expect(result.find(item => item.name === 'Another Common Item')).to.have.property('quality').eql(0)
+        expect(result.find(item => item.name === 'Another Common Item')).to.have.property('sellIn').eql(-1)
     });
 });
