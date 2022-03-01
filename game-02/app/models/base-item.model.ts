@@ -12,5 +12,5 @@ export abstract class BaseItem extends Item {
         }
     }
 
-    updateQuality() {}
+    abstract updateQuality()
 }
