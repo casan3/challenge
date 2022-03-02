@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "dev": "nodemon"
   },
   "keywords": [],
@@ -12,6 +12,10 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^17.0.18",
+    "@types/chai": "~3.5.2",
+    "@types/mocha": "~2.2.41",
+    "chai": "~4.2.0",
+    "mocha": "~8.2.1",
     "nodemon": "^2.0.15",
     "ts-node": "^10.5.0",
     "typescript": "^4.5.5"

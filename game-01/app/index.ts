@@ -1,25 +1,17 @@
-const findFirstSum = (array: Array<number>, sumResult: number ): Array<number> | string => {
+export const findFirstSum = (array: Array<number>, sumResult: number ): Array<number> | string => {
     const result: Array<number> = [];
+    const aux: Object = {};
 
-    while (array.length > 0) {
-        const currentNum = array[0];
-        if(currentNum <= sumResult) {
-            array.splice(0, 1);
-            const neededNumber: number = sumResult - currentNum;
-            if(array.includes(neededNumber)) {
-                result.push(currentNum, neededNumber);
-                break;
-            }
-        } else {
-            array.splice(0, 1);
+    for (const number of array) {
+        const neededNumber: number = sumResult - number;
+        if (aux[number]) {
+            result.push(aux[number], number);
+            return result;
         }
+        aux[neededNumber] = number;
     }
 
-    if(result.length > 0) {
-        return result;
-    } else {
-        return `No pair of numbers that sum ${sumResult} where found`;
-    }
+    return `No pair of numbers that sum ${sumResult} where found`;
 }
 
 const array: Array<number> = [2, 5, 8, 14, 0];
